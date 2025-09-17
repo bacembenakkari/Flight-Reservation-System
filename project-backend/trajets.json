@@ -1,0 +1,47 @@
+[
+  {
+    "villeDepart": "Tunis",
+    "villeArrivee": "Paris",
+    "dateDepart": "2025-09-20T08:30:00",
+    "dateArrivee": "2025-09-20T12:45:00",
+    "prix": 250.00,
+    "tempsTrajet": 255,
+    "capaciteMaximale": 180
+  },
+  {
+    "villeDepart": "Toulouse",
+    "villeArrivee": "Djerba",
+    "dateDepart": "2025-09-22T14:00:00",
+    "dateArrivee": "2025-09-22T16:30:00",
+    "prix": 180.00,
+    "tempsTrajet": 150,
+    "capaciteMaximale": 150
+  },
+  {
+    "villeDepart": "Maroc",
+    "villeArrivee": "Algerie",
+    "dateDepart": "2025-09-28T09:00:00",
+    "dateArrivee": "2025-09-28T19:00:00",
+    "prix": 75.00,
+    "tempsTrajet": 600,
+    "capaciteMaximale": 180
+  },
+  {
+    "villeDepart": "Lille",
+    "villeArrivee": "Paris",
+    "dateDepart": "2025-09-25T10:00:00",
+    "dateArrivee": "2025-09-25T12:00:00",
+    "prix": 150.00,
+    "tempsTrajet": 120,
+    "capaciteMaximale": 200
+  },
+  {
+    "villeDepart": "Sousse",
+    "villeArrivee": "Djerba",
+    "dateDepart": "2025-09-30T07:30:00",
+    "dateArrivee": "2025-09-30T09:45:00",
+    "prix": 100.00,
+    "tempsTrajet": 135,
+    "capaciteMaximale": 160
+  }
+]

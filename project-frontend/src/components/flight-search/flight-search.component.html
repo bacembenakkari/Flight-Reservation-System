@@ -57,68 +57,95 @@
         </div>
       </div>
       <!-- Search Form -->
-      <div class="grid grid-cols-1 lg:grid-cols-5 gap-4 mb-6">
-        <div class="search-input-group">
+      <div class="flex flex-col lg:flex-row gap-4 mb-6 w-full">
+        <div class="search-input-group flex-1 min-w-0">
           <div class="search-input-label">From</div>
           <input
             type="text"
-            [(ngModel)]="searchParams().villeDepart"
+            [ngModel]="searchParams().villeDepart"
+            (ngModelChange)="updateVilleDepart($event)"
             class="w-full px-4 py-3 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
             placeholder="Country, city or airport"
           />
         </div>
-        <div class="swap-button lg:block hidden">
-          <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"/>
-          </svg>
+        
+        <div class="swap-button lg:block hidden flex-shrink-0 self-end mb-0 mt-auto">
+          <div class="bg-white p-2 border border-gray-300 rounded-md flex items-center justify-center">
+            <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l4 4m0 6H4m0 0l4 4m-4-4l4-4"/>
+            </svg>
+          </div>
         </div>
-        <div class="search-input-group">
+        
+        <div class="search-input-group flex-1 min-w-0">
           <div class="search-input-label">To</div>
           <input
             type="text"
-            [(ngModel)]="searchParams().villeArrivee"
+            [ngModel]="searchParams().villeArrivee"
+            (ngModelChange)="updateVilleArrivee($event)"
             class="w-full px-4 py-3 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
             placeholder="Country, city or airport"
           />
         </div>
-        <div class="search-input-group">
+        
+        <div class="search-input-group flex-1 min-w-0">
           <div class="search-input-label">Depart</div>
           <button
             type="button"
-            class="w-full px-4 py-3 border border-gray-300 rounded-lg text-left text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+            class="w-full px-4 py-3 border border-gray-300 rounded-lg text-left text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white"
             (click)="openCalendar('depart')"
           >
             {{ searchParams().dateDepart || 'Depart date' }}
           </button>
         </div>
-        <div class="search-input-group">
+        
+        <div class="search-input-group flex-1 min-w-0">
           <div class="search-input-label">Return</div>
           <button
             type="button"
-            class="w-full px-4 py-3 border border-gray-300 rounded-lg text-left text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+            class="w-full px-4 py-3 border border-gray-300 rounded-lg text-left text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white"
             (click)="openCalendar('return')"
           >
             {{ searchParams().dateArrivee || 'Add date' }}
           </button>
         </div>
+        
+        <!-- Tri (Sort) Field -->
+        <div class="search-input-group flex-1 min-w-0">
+          <div class="search-input-label">Sort by</div>
+          <select
+            [ngModel]="searchParams().tri || ''"
+            (ngModelChange)="updateTriValue($event)"
+            class="w-full px-4 py-3 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white"
+          >
+            <option value="">Best</option>
+            <option value="prix">Price</option>
+            <option value="temps_trajet">Duration</option>
+          </select>
+        </div>
+        
         <!-- Search Button -->
-        <div class="search-input-group">
+        <div class="flex-1 min-w-0">
           <button
             type="button"
-            class="w-full h-full bg-blue-600 hover:bg-blue-700 text-white font-semibold text-lg px-16 py-4 rounded-lg transition-colors duration-200 flex items-center justify-center"
+            class="search-button-full"
             (click)="searchFlights()"
             [disabled]="isLoading() || !isSearchValid()"
           >
-            <span *ngIf="!isLoading()">Search</span>
-            <span *ngIf="isLoading()" class="flex items-center">
+            <span *ngIf="!isLoading()" class="w-full text-center">Search</span>
+            <span *ngIf="isLoading()" class="flex items-center justify-center w-full">
               <svg class="animate-spin -ml-1 mr-2 h-4 w-4 text-white" fill="none" viewBox="0 0 24 24">
                 <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 714 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
               </svg>
               Searching...
             </span>
           </button>
         </div>
+      </div>
+      <!-- Error Message -->
+      <div *ngIf="errorMessage()" class="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg">
+        <p class="text-red-600 text-sm">{{ errorMessage() }}</p>
       </div>
       <!-- Additional Options -->
       <div class="flex flex-wrap gap-4 mb-8 text-sm text-white">
@@ -198,6 +225,7 @@
     </div>
   </div>
 </div>
+
 <!-- Results Page View -->
 <div *ngIf="hasSearched()" class="bg-gray-50 min-h-screen">
   <!-- Header with Search Summary -->
@@ -258,13 +286,13 @@
           <div class="flex items-center">
             <span class="text-sm text-gray-600 mr-2">Trier par</span>
             <select
-              [(ngModel)]="searchParams().tri"
-              (ngModelChange)="searchFlights()"
+              [ngModel]="searchParams().tri || ''"
+              (ngModelChange)="updateTriValue($event)"
               class="border border-gray-300 rounded-lg p-1 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
               <option value="">Le meilleur</option>
               <option value="prix">Le moins cher</option>
-              <option value="tempsTrajet">Le plus rapide</option>
+              <option value="temps_trajet">Le plus rapide</option>
             </select>
           </div>
         </div>
@@ -342,6 +370,7 @@
     </div>
   </div>
 </div>
+
 <!-- Reservation Popup -->
 <div *ngIf="showReservationPopup() && !reservationSuccess()" class="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
   <div class="bg-white rounded-lg shadow-xl w-full max-w-md mx-4" (click)="$event.stopPropagation()">

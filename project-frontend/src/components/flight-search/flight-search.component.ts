@@ -101,7 +101,7 @@ export class FlightSearchComponent implements OnInit {
   getInitialDate(): Date {
     const type = this.calendarType();
     const dateStr = type === 'depart' ? this.searchParams().dateDepart : this.searchParams().dateArrivee;
-    return dateStr ? new Date(dateStr) : new Date(); // Use current date instead of hardcoded
+    return dateStr ? new Date(dateStr) : new Date();
   }
 
   onDateSelected(date: string) {
@@ -130,6 +130,21 @@ export class FlightSearchComponent implements OnInit {
     this.filters.set(newFilters);
   }
 
+  updateTriValue(value: string) {
+    this.searchParams.update(params => ({ 
+      ...params, 
+      tri: value === '' ? undefined : value as 'prix' | 'temps_trajet'
+    }));
+  }
+
+  updateVilleDepart(value: string) {
+    this.searchParams.update(params => ({ ...params, villeDepart: value }));
+  }
+
+  updateVilleArrivee(value: string) {
+    this.searchParams.update(params => ({ ...params, villeArrivee: value }));
+  }
+
   searchFlights() {
     if (!this.isSearchValid()) {
       this.errorMessage.set('Veuillez remplir tous les champs (départ, arrivée, date de départ et date de retour).');
@@ -137,6 +152,7 @@ export class FlightSearchComponent implements OnInit {
     }
     this.isLoading.set(true);
     this.errorMessage.set(null);
+
     this.flightService.searchFlights(this.searchParams()).subscribe({
       next: (response) => {
         this.searchResults.set(response);
@@ -176,13 +192,12 @@ export class FlightSearchComponent implements OnInit {
       return isEscalesMatch && isTimeMatch && isDurationMatch;
     });
 
+    // Client-side sorting as fallback (API should handle this, but keeping for safety)
     const sortType = this.searchParams().tri;
     if (sortType === 'prix') {
       filtered = filtered.sort((a, b) => a.prix - b.prix);
-    } else if (sortType === 'tempsTrajet') {
+    } else if (sortType === 'temps_trajet') {
       filtered = filtered.sort((a, b) => a.tempsTrajet - b.tempsTrajet);
-    } else {
-      filtered = filtered.sort((a, b) => b.prix - a.prix);
     }
 
     return filtered;

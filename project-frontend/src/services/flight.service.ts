@@ -31,7 +31,7 @@ export interface FlightSearchParams {
   dateArrivee?: string;
   villeDepart?: string;
   villeArrivee?: string;
-  tri?: 'prix' | 'tempsTrajet';
+  tri?: 'prix' | 'temps_trajet';
 }
 
 export interface FlightSearchResponse {
@@ -114,8 +114,6 @@ export class FlightService {
       direct: flight.direct || (Math.random() > 0.3)
     }));
   }
-
-
 
   reserveFlight(request: ReservationRequest): Observable<ReservationResponse> {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });

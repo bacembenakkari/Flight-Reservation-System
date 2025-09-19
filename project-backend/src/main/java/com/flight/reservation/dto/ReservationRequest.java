@@ -4,9 +4,12 @@ import com.flight.reservation.entity.Passager;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.UUID;
-
+@Getter
+@Setter
 public class ReservationRequest {
     
     @NotNull
@@ -30,12 +33,5 @@ public class ReservationRequest {
     }
     
     // Getters et Setters
-    public UUID getVolId() { return volId; }
-    public void setVolId(UUID volId) { this.volId = volId; }
-    
-    public Passager getPassager() { return passager; }
-    public void setPassager(Passager passager) { this.passager = passager; }
-    
-    public Integer getNombrePlaces() { return nombrePlaces; }
-    public void setNombrePlaces(Integer nombrePlaces) { this.nombrePlaces = nombrePlaces; }
+
 }

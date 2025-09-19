@@ -53,7 +53,7 @@ public class VolService implements IVolService {
                 .toList();
         return volRepository.saveAll(vols);
     }
-    // to update teh cache
+    // to update the cache
     @CacheEvict(value = "vol-places", key = "#volId")
     public void evictCache(UUID volId) {
         // Cache éviction automatique
